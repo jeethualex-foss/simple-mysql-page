@@ -1,2 +1,2 @@
-# simple-php-page
-Simple PHP Page
+# simple-mysql-page
+Simple MySql Page
