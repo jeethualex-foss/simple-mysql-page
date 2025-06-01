@@ -35,6 +35,8 @@
 							<h3>Pellentesque quis </h3>
 							<p>Gravida velit. Maecenas euismod tellus risus, et viverra mi pretium eget. Quisque ut dictum lectus, id auctor orci. Maecenas varius est felis, ac pellentesque velit lacinia quis. Ut ex dolor, ultrices in vehicula cursus, tempus ac est. Curabitur tellus orci, quam velit pellentesque ante, eget sagittis ligula sapien at tortor. Donec a nisl ac massa feugiat mattis. Cras sed commodo tortor.</p>
 
+							<?php include 'database.php';?>
+
 							<h2>Eget sagittis</h2>
 							<h3>Integer vel semper</h3>
 							<p align="left"><ul>
@@ -44,13 +46,6 @@
 							<li><a href="#">Feugiat vel porta</a></li>
 							<li><a href="#">Maecenas euismod tellus</a></li>
 							<li><a href="#">Feugiat vel porta</a></li>
-							<li><a href="#">Maecenas euismod tellus</a></li>
-							<li><a href="#">Et viverra mi pretium</a></li>
-							<li><a href="#">Aenean id enim nec</a></li>
-							<li><a href="#">Pharetra cursus sit</a></li>
-							<li><a href="#">Et viverra mi pretium</a></li>
-							<li><a href="#">Aenean id enim nec</a></li>
-							<li><a href="#">Pharetra cursus sit</a></li>
 						</ul> </p>
 						</div>
 					</td>

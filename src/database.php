@@ -1,53 +1,39 @@
-<!doctype html>
-<html lang="en">
+<h3>Docker Tutorial</h3>
+<div class=".db-table">
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Message</th>
+        </tr>
+        <?php
 
-<head>
-    <meta charset="utf-8">
-    <title>Docker Tutorial</title>
-    <meta name="description" content="Learn how to use Docker with PHP">
-    <meta name="author" content="Matthew Parris">
-</head>
+        $env = file_get_contents("/deployments/.env");
 
-<body>
-    <h1>Docker Tutorial</h1>
-    <div class=".db-table">
-        <table>
-            <tr>
-                <th>Id</th>
-                <th>Message</th>
-            </tr>
-            <?php
+        //var_dump($env);
 
-            $env = file_get_contents("/deployments/.env");
+        $lines = explode("\n",$env);
 
-            //var_dump($env);
+        foreach($lines as $line){
+          preg_match("/([^#]+)\=(.*)/",$line,$matches);
+          if(isset($matches[2])){ putenv(trim($line)); }
+        }
 
-            $lines = explode("\n",$env);
+        //var_dump(getenv());
 
-            foreach($lines as $line){
-              preg_match("/([^#]+)\=(.*)/",$line,$matches);
-              if(isset($matches[2])){ putenv(trim($line)); }
+        $user = getenv("DB_USER");
+        $pass = getenv("DB_PASS");
+
+        try {
+            $dbh = new PDO('mysql:host=db;port=3306;dbname=app', $user, $pass);
+            foreach ($dbh->query('SELECT * from message') as $row) {
+                $html = "<tr><td>${row['id']}</td><td>${row['message']}</td></tr>";
+                echo $html;
             }
-
-            //var_dump(getenv());
-
-            $user = getenv("DB_USER");
-            $pass = getenv("DB_PASS");
-
-            try {
-                $dbh = new PDO('mysql:host=db;port=3306;dbname=app', $user, $pass);
-                foreach ($dbh->query('SELECT * from message') as $row) {
-                    $html = "<tr><td>${row['id']}</td><td>${row['message']}</td></tr>";
-                    echo $html;
-                }
-                $dbh = null;
-            } catch (PDOException $e) {
-                print "Error!: " . $e->getMessage() . "<br/>";
-                die();
-            }
-            ?>
-        </table>
-    </div>
-</body>
-
-</html>
+            $dbh = null;
+        } catch (PDOException $e) {
+            print "Error!: " . $e->getMessage() . "<br/>";
+            die();
+        }
+        ?>
+    </table>
+</div>
