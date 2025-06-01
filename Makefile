@@ -26,7 +26,7 @@ build_mysql:
 build_phpmyadmin:
 	docker stop mysql || true && docker rm mysql || true
 	docker stop phpmyadmin || true && docker rm phpmyadmin || true
-	docker run --name mysql -e MYSQL_ROOT_PASSWORD=$(db_pass) -p 3306:3306 -d jeethualex/foss:$(app)-db
+	docker run --name mysql -e MYSQL_ROOT_PASSWORD=$(db_pass) -p 3306:3306 -d $(tag)-db
 	docker run --name phpmyadmin --link mysql:db -p 8080:80 -d phpmyadmin
 
 deploy:
