@@ -2,6 +2,7 @@ app := simple-mysql-page
 user :=
 pass :=
 tag :=
+db_user :=
 db_pass :=
 
 default: login
@@ -12,10 +13,13 @@ login:
 	docker login -u $(user) -p $(pass)
 
 build:
+	export DB_USER=$(db_user)
+	export DB_PASS=$(db_pass)
 	docker build -t $(tag) .
 	docker push $(tag)
 
 build_mysql:
+	export MYSQL_ROOT_PASSWORD=$(db_pass)
 	docker build -t $(tag)-db ./mysql
 	docker push $(tag)-db
 
@@ -27,7 +31,7 @@ build_phpmyadmin:
 
 deploy:
 	docker stop $(app) || true && docker rm $(app) || true
-	docker run --name $(app) --link mysql:db -p 80:80 -d $(tag)
+	docker run --name $(app) --link mysql:db -e DB_USER=$(db_user) -e DB_PASS=$(db_pass) -p 80:80 -d $(tag)
 
 debug:
 	docker exec -it $(app) sh

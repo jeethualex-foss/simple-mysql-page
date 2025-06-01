@@ -17,8 +17,22 @@
                 <th>Message</th>
             </tr>
             <?php
-            $user = 'root';
-            $pass = '';
+
+            $env = file_get_contents("/deployments/.env");
+
+            //var_dump($env);
+
+            $lines = explode("\n",$env);
+
+            foreach($lines as $line){
+              preg_match("/([^#]+)\=(.*)/",$line,$matches);
+              if(isset($matches[2])){ putenv(trim($line)); }
+            }
+
+            //var_dump(getenv());
+
+            $user = getenv("DB_USER");
+            $pass = getenv("DB_PASS");
 
             try {
                 $dbh = new PDO('mysql:host=db;port=3306;dbname=app', $user, $pass);

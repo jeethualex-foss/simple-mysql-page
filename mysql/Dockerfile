@@ -1,7 +1,7 @@
 FROM mysql:8.0
 
 # Set an insecure password
-ENV MYSQL_ROOT_PASSWORD=1234
+ENV MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
 
 # Copy over our SQL queries
 COPY ./data.sql /data.sql
