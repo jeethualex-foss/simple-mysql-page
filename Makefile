@@ -5,7 +5,7 @@ tag :=
 
 default: login
 
-publish: build deploy
+publish: phpmyadmin build deploy
 
 login:
 	docker login -u $(user) -p $(pass)
