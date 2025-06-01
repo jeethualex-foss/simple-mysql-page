@@ -19,7 +19,6 @@ build:
 build_env:
 	export DB_USER=$(db_user)
 	export DB_PASS=$(db_pass)
-	export MYSQL_ROOT_PASSWORD=$(db_pass)
 
 build_mysql:
 	docker build -t $(tag)-db ./mysql
