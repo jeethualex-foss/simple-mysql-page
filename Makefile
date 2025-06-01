@@ -7,19 +7,21 @@ db_pass :=
 
 default: login
 
-publish: build_mysql build_phpmyadmin build deploy
+publish: build_env build_mysql build_phpmyadmin build deploy
 
 login:
 	docker login -u $(user) -p $(pass)
 
 build:
-	export DB_USER=$(db_user)
-	export DB_PASS=$(db_pass)
 	docker build -t $(tag) .
 	docker push $(tag)
 
-build_mysql:
+build_env:
+	export DB_USER=$(db_user)
+	export DB_PASS=$(db_pass)
 	export MYSQL_ROOT_PASSWORD=$(db_pass)
+
+build_mysql:
 	docker build -t $(tag)-db ./mysql
 	docker push $(tag)-db
 
