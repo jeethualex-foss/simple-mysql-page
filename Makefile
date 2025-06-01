@@ -2,6 +2,7 @@ app := simple-mysql-page
 user :=
 pass :=
 tag :=
+db_pass :=
 
 default: login
 
@@ -16,7 +17,7 @@ build:
 
 deploy:
 	docker stop $(app) || true && docker rm $(app) || true
-	docker run --privileged --name $(app) -d -p 80:80 $(tag)
+	docker run --name $(app) --link mysql:db -p 80:80 -d $(tag)
 
 debug:
 	docker exec -it $(app) sh
@@ -24,7 +25,7 @@ debug:
 phpmyadmin:
 	docker stop mysql || true && docker rm mysql || true
 	docker stop phpmyadmin || true && docker rm phpmyadmin || true
-	docker run --name mysql -e MYSQL_ROOT_PASSWORD=secret -p 3306:3306 -d mysql
+	docker run --name mysql -e MYSQL_ROOT_PASSWORD=$(db_pass) -p 3306:3306 -d mysql
 	docker run --name phpmyadmin --link mysql:db -p 8080:80 -d phpmyadmin
 
 hello:
