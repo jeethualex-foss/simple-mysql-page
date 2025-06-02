@@ -1,35 +1,37 @@
 app := simple-mysql-page
 user :=
 pass :=
-tag :=
+image :=
 db_user :=
 db_pass :=
 
 default: login
 
-publish: clean build_env build_mysql build_phpmyadmin build deploy
+publish: clean setup build_mysql deploy_mysql deploy_phpmyadmin build deploy
 
 login:
 	docker login -u $(user) -p $(pass)
 
-build:
-	docker build -t $(tag) .
-	docker push $(tag)
-
-build_env:
+setup:
 	export DB_USER=$(db_user)
 	export DB_PASS=$(db_pass)
 
-build_mysql:
-	docker build -t $(tag)-db ./mysql
-	docker push $(tag)-db
+build:
+	docker build -t $(image) .
+	docker push $(image)
 
-build_phpmyadmin:
-	docker run --name mysql -e MYSQL_ROOT_PASSWORD=$(db_pass) -p 3306:3306 -d $(tag)-db
+build_mysql:
+	docker build -t $(image)-db ./mysql
+	docker push $(image)-db
+
+deploy_mysql:
+	docker run --name mysql -e MYSQL_ROOT_PASSWORD=$(db_pass) -p 3306:3306 -d $(image)-db
+
+deploy_phpmyadmin:
 	docker run --name phpmyadmin --link mysql:db -p 8080:80 -d phpmyadmin
 
 deploy:
-	docker run --name $(app) --link mysql:db -e DB_USER=$(db_user) -e DB_PASS=$(db_pass) -p 80:80 -d $(tag)
+	docker run --name $(app) --link mysql:db -e DB_USER=$(db_user) -e DB_PASS=$(db_pass) -p 80:80 -d $(image)
 
 debug:
 	docker exec -it $(app) sh
