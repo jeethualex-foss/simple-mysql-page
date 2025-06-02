@@ -38,9 +38,3 @@ clean:
 	docker stop mysql || true && docker rm mysql || true
 	docker stop phpmyadmin || true && docker rm phpmyadmin || true
 	docker stop $(app) || true && docker rm $(app) || true
-
-hello:
-	@echo "Hello, World"
-
-hello1:
-	@echo "Hello 1, World"make

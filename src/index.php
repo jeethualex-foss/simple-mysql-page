@@ -40,8 +40,8 @@
 							<h2>Eget sagittis</h2>
 							<h3>Integer vel semper</h3>
 							<p align="left"><ul>
-							<li><a href="#">Feugiat vel porta</a></li>
-							<li><a href="#">Maecenas euismod tellus</a></li>
+							<li><a href="/info.php" target=_blank>Info example</a></li>
+							<li><a href="/database.php" target=_blank>Database example</a></li>
 							<li><a href="#">Et viverra mi pretium</a></li>
 							<li><a href="#">Feugiat vel porta</a></li>
 							<li><a href="#">Maecenas euismod tellus</a></li>
